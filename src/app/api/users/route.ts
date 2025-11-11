@@ -2,6 +2,10 @@ import { AppDataSource } from "@/lib/dataSource";
 import UserService from "@/module/user/useCase/Service/user.service";
 import { NextResponse } from "next/server";
 
+type Params = {
+  params: { id: string };
+};
+
 const service = new UserService();
 
 async function initDB() {

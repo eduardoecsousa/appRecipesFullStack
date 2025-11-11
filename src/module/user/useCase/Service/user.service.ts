@@ -1,3 +1,4 @@
+import { hashPassword } from "@/utils/crypto";
 import IRegisterUser from "../../dto/IRegisterUser";
 import { userRepository } from "../../infra/repo/userRepository";
 import validateUserCreate from "./Validation/validationsUser";
@@ -9,10 +10,11 @@ export default class UserService {
 
   async createUser(userData: Partial<IRegisterUser>) {
     const { error, value } = validateUserCreate.validate(userData);
+    const hashedPassword = await hashPassword(value.password);
     if (error) {
       throw new Error(`Validation error: ${error.details[0].message}`);
     }
-    const user = userRepository.create(value);
+    const user = userRepository.create({ ...value, password: hashedPassword });
     return userRepository.save(user);
   }
 
@@ -33,5 +35,13 @@ export default class UserService {
   async deleteUser(id: string) {
     const user = await this.showUser(id);
     return userRepository.remove(user);
+  }
+
+  async findByEmail(email: string) {
+    const user = await userRepository.findOneBy({ email });
+    if (!user) {
+      throw new Error("User not found");
+    }
+    return user;
   }
 }
