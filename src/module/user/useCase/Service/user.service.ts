@@ -44,4 +44,11 @@ export default class UserService {
     }
     return user;
   }
+
+  async updatePassword(userId: string, newPassword: string) {
+    const user = await this.showUser(userId);
+    const hashedPassword = await hashPassword(newPassword);
+    user.password = hashedPassword;
+    return userRepository.save(user);
+  } 
 }
