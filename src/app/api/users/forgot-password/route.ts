@@ -1,8 +1,8 @@
 import { AppDataSource } from "@/lib/dataSource";
-import sendEmail from "@/module/services.email/emailService";
+import sendEmail from "@/module/user/services.email/emailService";
 import ResetPasswordService from "@/module/tokenResetPassword/useCase/resetPassword.service";
 import User from "@/module/user/infra/entities/user.entity";
-import UserService from "@/module/user/useCase/Service/user.service";
+import UserService from "@/module/user/Service/user.service";
 
 const service = new UserService();
 const resetPasswordService = new ResetPasswordService();

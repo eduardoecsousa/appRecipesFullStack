@@ -6,6 +6,10 @@ export function generateToken(payload: object): string {
   return jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
 }
 
+export function generateTokenRefresh(payload: object): string {
+  return jwt.sign(payload, SECRET_KEY, { expiresIn: "7d" });
+}
+
 export function verifyToken(token: string): any {
   try {
     return jwt.verify(token, SECRET_KEY);

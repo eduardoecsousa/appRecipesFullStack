@@ -1,6 +1,6 @@
 import { AppDataSource } from "@/lib/dataSource";
 import ResetPasswordService from "@/module/tokenResetPassword/useCase/resetPassword.service";
-import UserService from "@/module/user/useCase/Service/user.service";
+import UserService from "@/module/user/Service/user.service";
 
 const resetPasswordService = new ResetPasswordService();
 const userService = new UserService();
@@ -24,7 +24,7 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET(req: Request, context: { params: Promise<{ token: string }> }) {
+async function GET(req: Request, context: { params: Promise<{}> }) {
   await initDB();
   const allTokens = await resetPasswordService.allTokens();
   return new Response(JSON.stringify({ allTokens }), { status: 200 });

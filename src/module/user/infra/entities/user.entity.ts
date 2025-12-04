@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import Role from "./role.enum";
+import Recipes from "@/module/recipes/infra/entities/recipes.entity";
 
 @Entity()
 export default class User {
@@ -29,4 +30,7 @@ export default class User {
 
   @Column({ type: "timestamptz" })
   updatedAt?: Date;
+
+  @OneToMany(() => Recipes, (recipe) => recipe.userCreator)
+  recipes?: Recipes[];
 }

@@ -1,7 +1,7 @@
 import { hashPassword } from "@/utils/crypto";
-import IRegisterUser from "../../dto/IRegisterUser";
-import { userRepository } from "../../infra/repo/userRepository";
+import IRegisterUser from "../dto/IRegisterUser";
 import validateUserCreate from "./Validation/validationsUser";
+import { userRepository } from "../infra/repo/userRepository";
 
 export default class UserService {
   async listUsers() {

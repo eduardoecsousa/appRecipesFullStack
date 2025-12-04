@@ -1,6 +1,8 @@
 import { AppDataSource } from "@/lib/dataSource";
-import UserService from "@/module/user/useCase/Service/user.service";
+import UserService from "@/module/user/Service/user.service";
 import { NextResponse } from "next/server";
+
+import { NextRequest } from 'next/server';
 
 type Params = {
   params: { id: string };
@@ -14,7 +16,8 @@ async function initDB() {
   }
 }
 
-export async function GET(req: Request, { params }: Params) {
+export async function GET(request: NextRequest, context: { params: Promise<{ id: string }> }): Promise<NextResponse<any>> {
+  const params = await context.params;
   await initDB();
   const { id } = params;
   try {
