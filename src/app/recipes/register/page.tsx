@@ -1,7 +1,9 @@
 'use client';
+import { useState } from "react";
 import { RecipeForm } from "./types";
 import { useForm } from "react-hook-form";
 import { useFieldArray } from "react-hook-form";
+import { AlertCircle } from "lucide-react";
 
 const RegisterRecipePage = () => {
   const { register, control, handleSubmit } = useForm<RecipeForm>({
@@ -10,14 +12,22 @@ const RegisterRecipePage = () => {
     }
   });
 
+  const [error, setError] = useState("")
+
   const { fields, append } = useFieldArray({
     control,
     name: "ingredients"
   });
 
   const onSubmit = (data: RecipeForm) => {
-    // Aqui você manda para sua API (Next API / Backend / Express / Spring)
-    console.log(data);
+    const res = fetch("/api/recipes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+     
   };
 
 
@@ -66,6 +76,8 @@ const RegisterRecipePage = () => {
                     <option value="grams">Grams</option>
                     <option value="ml">Milliliters</option>
                     <option value="cups">Cups</option>
+                    <option value="spoons">Spoons</option>
+                    <option value="unit">Unit</option>
                   </select>
 
                   <input
@@ -118,6 +130,12 @@ const RegisterRecipePage = () => {
             Register Recipe
           </button>
         </form>
+        {error && (
+          <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded flex items-center gap-2" role="alert">
+            <AlertCircle className="w-5 h-5" />
+            <span>{error}</span>
+          </div>
+        )}
       </div>
     </div>
   );

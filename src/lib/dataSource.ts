@@ -2,6 +2,7 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 import User from "@/module/user/infra/entities/user.entity";
 import { PasswordResetToken } from "@/module/tokenResetPassword/infra/entities/PasswordResetToken";
+import Recipes from "@/module/recipes/infra/entities/recipes.entity";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -12,5 +13,5 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME || "recipes_fullstack",
   synchronize: true, // ⚠️ use false em produção
   logging: true,
-  entities: [User, PasswordResetToken],
+  entities: [User, PasswordResetToken, Recipes],
 });

@@ -31,6 +31,6 @@ export default class User {
   @Column({ type: "timestamptz" })
   updatedAt?: Date;
 
-  @OneToMany(() => Recipes, (recipe) => recipe.userCreator)
-  recipes?: Recipes[];
+  @OneToMany(() => require('@/module/recipes/infra/entities/recipes.entity').default, (recipe:Recipes) => recipe.userCreator)
+  recipes!: Recipes[];
 }

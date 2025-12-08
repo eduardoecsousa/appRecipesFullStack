@@ -2,7 +2,7 @@ import User from "@/module/user/infra/entities/user.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export default class Recipes{
+export default class Recipes {
   @PrimaryGeneratedColumn('uuid')
   id?: string;
 
@@ -15,8 +15,12 @@ export default class Recipes{
   @Column()
   url?: string;
 
-  @ManyToOne(() => User, (user) => user.recipes)
-  userCreator?: User;
+  @ManyToOne(
+    // Importa a classe User APENAS no contexto do decorador.
+    () => require('@/module/user/infra/entities/user.entity').default, 
+    (user:User) => user.recipes
+  )
+  userCreator!: User;
 
   createdAt?: Date;
 

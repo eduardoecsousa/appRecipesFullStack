@@ -5,17 +5,14 @@ import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
 import { AlertCircle } from "lucide-react"
-import { Button, Card, Input, Typography } from "@material-tailwind/react";
-import Logo from "@/pictures/Gemini_Generated_Image_csbnsvcsbnsvcsbn_novo.png"
-import Image from "next/image"
-
-
+import { useAuth } from "@/context/auth/authContext"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const { setAcessToken } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -32,6 +29,7 @@ export default function LoginPage() {
 
     setIsLoading(false) 
     if (response.ok) {
+      setAcessToken((await response.json()).accessToken);
       window.location.href = "/"
     } else {
       const data = await response.json()
